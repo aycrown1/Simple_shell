@@ -1,17 +1,25 @@
+/**
+ * the necessary function prototypes,
+ * data structures,
+ * and utility functions for the shell program.
+ */
+
 #ifndef SHELL_H
 #define SHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
+#include <stdio.h> /* input and output functions */
+#include <stdlib.h> /* memory allocation and process control functions */
+#include <unistd.h> /* POSIX operating system API functions */
+#include <string.h> /* string manipulation functions */
 #include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <limits.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <ctype.h>
+/* data types used in system calls, such as pid_t (process ID type) */
+#include <sys/wait.h> /* process management and waiting */
+#include <sys/stat.h> /* file status & information */
+#include <limits.h> /* constants and limits */
+#include <fcntl.h> /* file control options and functions */
+#include <errno.h> /* the errno variable */
+#include <ctype.h> /* character classification and conversion */
+#include <glob.h> /* pattern matching and file globbing */
 
 #define READ_BUF_SIZE 1024
 #define WRITE_BUF_SIZE 1024
@@ -36,7 +44,6 @@ list_t *append_node(list_t **, const char *, int);
 size_t print_strnode(const list_t *);
 int remove_index(list_t **, unsigned int);
 void free_list(list_t **);
-
 size_t list_size(const list_t *);
 char **list_to_strings(list_t *);
 list_t *node_prefix(list_t *, char *, char);
@@ -45,21 +52,21 @@ ssize_t find_index(list_t *, list_t *);
 /**
  * struct Shell - Structure used to store the state of the shell
  * @arg:the argument that was passed to the shell.
- * @argv: an array of strings that represents the arguments that were passed to the shell.
+ * @argv: an array of strings contains the arguments that were passed.
  * @path: a string, the current working directory of the shell.
  * @argc: the number of arguments passed to the shell.
  * @count: the current line number of the shell input.
- * @estatus: the exit status of the last command executed by the shell..
- * @display: A flag indicating whether to display line numbers when printing the shell input.
+ * @estatus: the exit status of the last command executed by the shell.
+ * @display: A flag indicating whether to display line numbers.
  * @fname: the name of the current file being executed by the shell.
  * @env: a linked list that represents the shell's environment variables.
- * @environ: An array of strings that represents the shell's environment variables.
+ * @environ: An array of strings that reps the shell's environment variables.
  * @alias:  a linked list that represents the shell's alias commands.
- * @modified: A flag indicating whether the shell's environment variables have been modified.
+ * @modified: A flag indicating if the shell's env variables have been modified.
  * @status: the current status of the shell.
  * @Buffer: the command buffer of the shell.
  * @type: the type of command buffer being used by the shell.
- * @file_descriptor: holds the file descriptor used for reading input in the shell program.
+ * @file_descriptor: holds the file descriptor used for reading input.
  */
 typedef struct Shell
 {
@@ -84,7 +91,8 @@ typedef struct Shell
 /*a macro that initializes a struct of type shell with default values.*/
 #define SHELL_INIT                                                             \
 	{                                                                          \
-		NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, 0, 0, NULL, 0, 0 \
+		NULL, NULL, NULL, 0, 0, 0, 0, NULL, \
+		  NULL, NULL, NULL, 0, 0, NULL, 0, 0	\
 	}
 
 /**
@@ -129,6 +137,8 @@ char *_strncpy(char *, char *, int);
 char *_strncat(char *, char *, int);
 char **strtow(char *, char *);
 char *_strstr(const char *, const char *);
+char **expand_wildcards(char *);
+void execute_wildcard(shell_t *);
 void _puts(char *);
 int _putchar(char);
 int _puts2(char);
