@@ -1,9 +1,3 @@
-/**
- * the necessary function prototypes,
- * data structures,
- * and utility functions for the shell program.
- */
-
 #ifndef SHELL_H
 #define SHELL_H
 
@@ -62,7 +56,7 @@ ssize_t find_index(list_t *, list_t *);
  * @env: a linked list that represents the shell's environment variables.
  * @environ: An array of strings that reps the shell's environment variables.
  * @alias:  a linked list that represents the shell's alias commands.
- * @modified: A flag indicating if the shell's env variables have been modified.
+ * @modified: A flag indicating if the env variables have been modified.
  * @status: the current status of the shell.
  * @Buffer: the command buffer of the shell.
  * @type: the type of command buffer being used by the shell.
@@ -89,8 +83,8 @@ typedef struct Shell
 } shell_t;
 
 /*a macro that initializes a struct of type shell with default values.*/
-#define SHELL_INIT                                                             \
-	{                                                                          \
+#define SHELL_INIT                                  \
+	{                                            \
 		NULL, NULL, NULL, 0, 0, 0, 0, NULL, \
 		  NULL, NULL, NULL, 0, 0, NULL, 0, 0	\
 	}
