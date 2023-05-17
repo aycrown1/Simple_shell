@@ -111,7 +111,7 @@ int env_builtin(shell_t *data)
  * @data: A pointer to the shell data structure,
  *which contains information about the current state of the shell.
  *  Return: returns 0 to indicate successful completion.
- * 		Otherwise, it returns 1 to indicate an error.
+ *		Otherwise, it returns 1 to indicate an error.
  */
 int setenv_builtin(shell_t *data)
 {
