@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * expand_wildcards - expands wildcards in a string,
+ * expand_wildcards - expands wildcards in a string
  *		and returns an array of strings.
  * @arg: A pointer to a string, the argument that may contain wildcard chars.
  * Return: returns the original argument as a single element array.
