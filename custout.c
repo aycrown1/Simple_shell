@@ -7,12 +7,11 @@ void _puts(char *);
 int _putchar(char);
 
 /**
- * _eputs - Prints an error message (massage) to the standard error output (stderr) 
+ * _eputs - Prints an error message to the standard error output (stderr)
  * instead of the standard output stream (stdout), allowing
  *				for effective error handling and informative output in the shell program.
  * @massage: the string massage to be printed
  * Return: void
- * 
  */
 void _eputs(char *massage)
 {
