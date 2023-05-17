@@ -30,11 +30,11 @@ char **expand_wildcards(char *arg)
 		result[n] = NULL;
 		globfree(&glob_result);
 	}
-	return result;
+	return (result);
 }
 
 /**
- * execute_wildcard - expands wildcard chars (* and ?) in command-line argument.
+ * execute_wildcard - expands wildcard chars (* and ?) in command-line argument
  *		and executing the corresponding commands.
  * @data: A pointer to the shell data structure,
  *		which contains information about the current state of the shell.
