@@ -13,24 +13,24 @@ int isdelimeter(char, char *);
  */
 void free_data(shell_t *data, int all)
 {
-_free(data->argv);
-data->argv = NULL;
-data->path = NULL;
-if (all)
-{
-if (!data->Buffer)
-free(data->arg);
-if (data->env)
-free_list(&(data->env));
-if (data->alias)
-free_list(&(data->alias));
-_free(data->environ);
-data->environ = NULL;
-_free2((void **)data->Buffer);
-if (data->file_descriptor > 2)
-close(data->file_descriptor);
-_putchar(BUF_FLUSH);
-}
+	_free(data->argv);
+	data->argv = NULL;
+	data->path = NULL;
+	if (all)
+	{
+		if (!data->Buffer)
+			free(data->arg);
+		if (data->env)
+			free_list(&(data->env));
+		if (data->alias)
+			free_list(&(data->alias));
+		_free(data->environ);
+		data->environ = NULL;
+		_free2((void **)data->Buffer);
+		if (data->file_descriptor > 2)
+			close(data->file_descriptor);
+		_putchar(BUF_FLUSH);
+	}
 }
 
 /**
@@ -42,14 +42,13 @@ _putchar(BUF_FLUSH);
  */
 void _perror(shell_t *data, char *str)
 {
-
-_eputs(data->fname);
-_eputs(": ");
-decimal(data->count, STDERR_FILENO);
-_eputs(": ");
-_eputs(data->argv[0]);
-_eputs(": ");
-_eputs(str);
+	_eputs(data->fname);
+	_eputs(": ");
+	decimal(data->count, STDERR_FILENO);
+	_eputs(": ");
+	_eputs(data->argv[0]);
+	_eputs(": ");
+	_eputs(str);
 }
 
 /**
@@ -61,34 +60,34 @@ _eputs(str);
  */
 int decimal(int input, int fd)
 {
-int (*__putchar)(char) = _putchar;
-int i, count = 0;
-unsigned int _abs_, current;
+	int (*__putchar)(char) = _putchar;
+	int i, count = 0;
+	unsigned int _abs_, current;
 
-if (fd == STDERR_FILENO)
-__putchar = _puts2;
-if (input < 0)
-{
-_abs_ = -input;
-__putchar('-');
-count++;
-}
-else
-_abs_ = input;
-current = _abs_;
-for (i = 1000000000; i > 1; i /= 10)
-{
-if (_abs_ / i)
-{
-__putchar('0' + current / i);
-count++;
-}
-current %= i;
-}
-__putchar('0' + current);
-count++;
+	if (fd == STDERR_FILENO)
+		__putchar = _puts2;
+	if (input < 0)
+	{
+		_abs_ = -input;
+		__putchar('-');
+		count++;
+	}
+	else
+		_abs_ = input;
+	current = _abs_;
+	for (i = 1000000000; i > 1; i /= 10)
+	{
+		if (_abs_ / i)
+		{
+			__putchar('0' + current / i);
+			count++;
+		}
+		current %= i;
+	}
+	__putchar('0' + current);
+	count++;
 
-return (count);
+	return (count);
 }
 
 /**
@@ -101,18 +100,18 @@ return (count);
  */
 char *duplicates(char *pathstr, int start, int stop)
 {
-static char buffer[1024];
-int i = 0, k = 0;
+	static char buffer[1024];
+	int i = 0, k = 0;
 
-for (k = 0, i = start; i < stop; i++)
-/**
+	for (k = 0, i = start; i < stop; i++)
+		/**
  * By skipping the colon character,
  * the function extracts only the path string without the colon separator.
  */
-if (pathstr[i] != ':')
-buffer[k++] = pathstr[i];
-buffer[k] = 0;
-return (buffer);
+		if (pathstr[i] != ':')
+			buffer[k++] = pathstr[i];
+	buffer[k] = 0;
+	return (buffer);
 }
 
 /**
@@ -125,8 +124,9 @@ return (buffer);
  */
 int isdelimeter(char character, char *delimeter)
 {
-while (*delimeter)
-if (*delimeter++ == character)
-return (1);
-return (0);
+	while (*delimeter)
+		if (*delimeter++ == character)
+			return (1);
+	return (0);
 }
+
