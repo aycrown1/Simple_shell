@@ -8,7 +8,8 @@ int isdelimeter(char, char *);
 
 /**
  * free_data - frees shell_t struct fields
- * @data:  A pointer to the shell data structure, which contains information about the current state of the shell.
+ * @data:  A pointer to the shell data structure,
+ *		which contains information about the current state of the shell.
  * @all: true if freeing all fields
  */
 void free_data(shell_t *data, int all)
@@ -35,7 +36,8 @@ void free_data(shell_t *data, int all)
 
 /**
  * _perror - prints an error message
- * @data: A pointer to the shell data structure, which contains information about the current state of the shell.
+ * @data: A pointer to the shell data structure,
+ *		which contains information about the current state of the shell.
  * @str: string containing specified error type.
  * Return: 0 if no numbers in string, converted number otherwise
  *-1 on error
@@ -115,7 +117,8 @@ char *duplicates(char *pathstr, int start, int stop)
 }
 
 /**
- * isdelimeter - identify delimiter characters in the input and tokenize the command line.
+ * isdelimeter - identify delimiter characters in the input
+ *		and tokenize the command line.
  * It allows the program to identify and separate different parts of a command
  * or argument based on the specified delimiter characters.
  * @character: the input character to check

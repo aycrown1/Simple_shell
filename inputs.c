@@ -8,7 +8,8 @@ ssize_t read_buffer(shell_t *data, char *buffer, size_t *i);
 
 /**
  * get_input - gets a line minus the newline
- * @data:  A pointer to the shell data structure, which contains information about the current state of the shell.
+ * @data:  A pointer to the shell data structure,
+ * which contains information about the current state of the shell.
  * Return: bytes read
  */
 ssize_t get_input(shell_t *data)
@@ -44,7 +45,7 @@ ssize_t get_input(shell_t *data)
 			data->type = 0;
 		}
 
-		*buffer_p = p;		 /* pass back pointer to current command position */
+		*buffer_p = p;	/* pass back pointer to current command position */
 		return (_strlen(p)); /* return length of current command */
 	}
 
@@ -56,7 +57,8 @@ ssize_t get_input(shell_t *data)
  * chained - checks if the current char in buffer is a chain delimeter
  * (specifically, whether it represents the "||"
  * or "&&" logical operators, or the ";" separator).
- * @data:  A pointer to the shell data structure, which contains information about the current state of the shell.
+ * @data:  A pointer to the shell data structure,
+ * which contains information about the current state of the shell.
  * @buffer: the char buffer
  * @p: address of current position in buffer
  * Return: 1 if chain delimeter, 0 otherwise
@@ -89,16 +91,19 @@ int chained(shell_t *data, char *buffer, size_t *p)
 }
 
 /**
- * check_chain - checks we should continue chaining based on last status
- * @data:  A pointer to the shell data structure, which contains information about the current state of the shell.
- * @buffer: the char buffer
+ * check_chain - responsible for checking the chain of commands
+ *	and determining the position in the buffer
+ *		where the command chain should be terminated.
+ * @data:  A pointer to the shell data structure,
+ * which contains information about the current state of the shell.
+ * @buffer: the input buffer containing the command chain.
  * @current: address of current position in buffer
- * @i: starting position in buffer
- * @len: length of buffer
- *
+ * @i: the current index being checked in the buffer.
+ * @len: the length of the buffer.
  * Return: Void
  */
-void check_chain(shell_t *data, char *buffer, size_t *current, size_t i, size_t len)
+void check_chain(shell_t *data, char *buffer,
+		size_t *current, size_t i, size_t len)
 {
 	size_t position = *current;
 
@@ -123,12 +128,13 @@ void check_chain(shell_t *data, char *buffer, size_t *current, size_t i, size_t 
 }
 
 /**
- * _getline - gets the next line of input from STDIN
- * @data:  A pointer to the shell data structure, which contains information about the current state of the shell.
+ * _getline - a utility function used by the shell program
+ * to read input from the user and manage the input buffer dynamically.
+ * @data:  A pointer to the shell data structure,
+ * which contains information about the current state of the shell.
  * @ptr: address of pointer to buffer, preallocated or NULL
- * @length: size of preallocated ptr buffer if not NULL
- *
- * Return: s
+ * @length: the length of the input buffer.
+ * Return:  returns the length of the newly read line.
  */
 int _getline(shell_t *data, char **ptr, size_t *length)
 {
@@ -170,11 +176,14 @@ int _getline(shell_t *data, char **ptr, size_t *length)
 }
 
 /**
- * read_buffer - reads a buffer
- * @data:  A pointer to the shell data structure, which contains information about the current state of the shell.
- * @buffer: buffer
- * @i: size
- * Return: reading
+ * read_buffer - responsible for reading input
+ *		from the file descriptor into a buffer.
+ * @data:  A pointer to the shell data structure,
+ *		which contains information about the current state of the shell.
+ * @buffer: A character buffer where the input will be stored.
+ * @i: A pointer that keeps track of the current position in the buffer.
+ * Return: returns the value of reading,
+ * which represents the number of bytes read from the file descriptor.
  */
 ssize_t read_buffer(shell_t *data, char *buffer, size_t *i)
 {

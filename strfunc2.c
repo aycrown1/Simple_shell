@@ -123,7 +123,9 @@ char **strtow(char *string, char *d)
 	if (!d)
 		d = " ";
 	for (i = 0; string[i] != '\0'; i++)
-		if (!isdelimeter(string[i], d) && (isdelimeter(string[i + 1], d) || !string[i + 1]))
+		if (!isdelimeter(string[i], d)
+		    && (isdelimeter(string[i + 1], d)
+			|| !string[i + 1]))
 			numwords++;
 
 	if (numwords == 0)
