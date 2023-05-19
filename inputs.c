@@ -13,43 +13,43 @@ ssize_t read_buffer(shell_t *data, char *buffer, size_t *i);
  */
 ssize_t get_input(shell_t *data)
 {
-static char *buffer;
-/* the ';' command chain buffer */
-static size_t i, j, len;
-ssize_t r = 0;
-char **buffer_p = &(data->arg), *p;
+	static char *buffer;
+	/* the ';' command chain buffer */
+	static size_t i, j, len;
+	ssize_t r = 0;
+	char **buffer_p = &(data->arg), *p;
 
-_putchar(BUF_FLUSH);
-r = input_buffer(data, &buffer, &len);
-if (r == -1) /* EOF */
-return (-1);
-if (len) /* we have commands left in the chain buffer */
-{
-j = i;
-/* init new iterator to current buffer position */
-p = buffer + i; /* get pointer for return */
+	_putchar(BUF_FLUSH);
+	r = input_buffer(data, &buffer, &len);
+	if (r == -1) /* EOF */
+		return (-1);
+	if (len) /* we have commands left in the chain buffer */
+	{
+		j = i;
+		/* init new iterator to current buffer position */
+		p = buffer + i; /* get pointer for return */
 
-check_chain(data, buffer, &j, i, len);
-while (j < len) /* iterate to semicolon or end */
-{
-if (chained(data, buffer, &j))
-break;
-j++;
-}
+		check_chain(data, buffer, &j, i, len);
+		while (j < len) /* iterate to semicolon or end */
+		{
+			if (chained(data, buffer, &j))
+				break;
+			j++;
+		}
 
-i = j + 1;	  /* increment past nulled ';'' */
-if (i >= len) /* reached end of buffer? */
-{
-i = len = 0; /* reset position and length */
-data->type = 0;
-}
+		i = j + 1;	  /* increment past nulled ';'' */
+		if (i >= len) /* reached end of buffer? */
+		{
+			i = len = 0; /* reset position and length */
+			data->type = 0;
+		}
 
-*buffer_p = p;		 /* pass back pointer to current command position */
-return (_strlen(p)); /* return length of current command */
-}
+		*buffer_p = p;		 /* pass back pointer to current command position */
+		return (_strlen(p)); /* return length of current command */
+	}
 
-*buffer_p = buffer; /* else not a chain, pass back buffer from _getline() */
-return (r);	   /* return length of buffer from _getline() */
+	*buffer_p = buffer; /* else not a chain, pass back buffer from _getline() */
+	return (r);			/* return length of buffer from _getline() */
 }
 
 /**
@@ -63,29 +63,29 @@ return (r);	   /* return length of buffer from _getline() */
  */
 int chained(shell_t *data, char *buffer, size_t *p)
 {
-size_t j = *p;
+	size_t j = *p;
 
-if (buffer[j] == '|' && buffer[j + 1] == '|')
-{
-buffer[j] = 0;
-j++;
-data->type = 1;
-}
-else if (buffer[j] == '&' && buffer[j + 1] == '&')
-{
-buffer[j] = 0;
-j++;
-data->type = 2;
-}
-else if (buffer[j] == ';') /* found end of this command */
-{
-buffer[j] = 0; /* replace semicolon with null */
-data->type = 3;
-}
-else
-return (0);
-*p = j;
-return (1);
+	if (buffer[j] == '|' && buffer[j + 1] == '|')
+	{
+		buffer[j] = 0;
+		j++;
+		data->type = 1;
+	}
+	else if (buffer[j] == '&' && buffer[j + 1] == '&')
+	{
+		buffer[j] = 0;
+		j++;
+		data->type = 2;
+	}
+	else if (buffer[j] == ';') /* found end of this command */
+	{
+		buffer[j] = 0; /* replace semicolon with null */
+		data->type = 3;
+	}
+	else
+		return (0);
+	*p = j;
+	return (1);
 }
 
 /**
@@ -100,26 +100,26 @@ return (1);
  */
 void check_chain(shell_t *data, char *buffer, size_t *current, size_t i, size_t len)
 {
-size_t position = *current;
+	size_t position = *current;
 
-if (data->type == 2)
-{
-if (data->status)
-{
-buffer[i] = 0;
-position = len;
-}
-}
-if (data->type == 1)
-{
-if (!data->status)
-{
-buffer[i] = 0;
-position = len;
-}
-}
+	if (data->type == 2)
+	{
+		if (data->status)
+		{
+			buffer[i] = 0;
+			position = len;
+		}
+	}
+	if (data->type == 1)
+	{
+		if (!data->status)
+		{
+			buffer[i] = 0;
+			position = len;
+		}
+	}
 
-*current = position;
+	*current = position;
 }
 
 /**
@@ -132,41 +132,41 @@ position = len;
  */
 int _getline(shell_t *data, char **ptr, size_t *length)
 {
-static char buffer[READ_BUF_SIZE];
-static size_t index, len;
-size_t sets;
-ssize_t value = 0, clength = 0;
-char *pointer = NULL, *new = NULL, *c;
+	static char buffer[READ_BUF_SIZE];
+	static size_t index, len;
+	size_t sets;
+	ssize_t value = 0, clength = 0;
+	char *pointer = NULL, *new = NULL, *c;
 
-pointer = *ptr;
-if (pointer && length)
-clength = *length;
-if (index == len)
-index = len = 0;
+	pointer = *ptr;
+	if (pointer && length)
+		clength = *length;
+	if (index == len)
+		index = len = 0;
 
-value = read_buffer(data, buffer, &len);
-if (value == -1 || (value == 0 && len == 0))
-return (-1);
+	value = read_buffer(data, buffer, &len);
+	if (value == -1 || (value == 0 && len == 0))
+		return (-1);
 
-c = _strchr(buffer + index, '\n');
-sets = c ? 1 + (unsigned int)(c - buffer) : len;
-new = _realloc(pointer, clength, clength ? clength + sets : sets + 1);
-if (!new)
-return (pointer ? free(pointer), -1 : -1);
+	c = _strchr(buffer + index, '\n');
+	sets = c ? 1 + (unsigned int)(c - buffer) : len;
+	new = _realloc(pointer, clength, clength ? clength + sets : sets + 1);
+	if (!new)
+		return (pointer ? free(pointer), -1 : -1);
 
-if (clength)
-_strncat(new, buffer + index, sets - index);
-else
-_strncpy(new, buffer + index, sets - index + 1);
+	if (clength)
+		_strncat(new, buffer + index, sets - index);
+	else
+		_strncpy(new, buffer + index, sets - index + 1);
 
-clength += sets - index;
-index = sets;
-pointer = new;
+	clength += sets - index;
+	index = sets;
+	pointer = new;
 
-if (length)
-*length = clength;
-*ptr = pointer;
-return (clength);
+	if (length)
+		*length = clength;
+	*ptr = pointer;
+	return (clength);
 }
 
 /**
@@ -178,12 +178,13 @@ return (clength);
  */
 ssize_t read_buffer(shell_t *data, char *buffer, size_t *i)
 {
-ssize_t reading = 0;
+	ssize_t reading = 0;
 
-if (*i)
-return (0);
-reading = read(data->file_descriptor, buffer, READ_BUF_SIZE);
-if (reading >= 0)
-*i = reading;
-return (reading);
+	if (*i)
+		return (0);
+	reading = read(data->file_descriptor, buffer, READ_BUF_SIZE);
+	if (reading >= 0)
+		*i = reading;
+	return (reading);
 }
+
