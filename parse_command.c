@@ -11,7 +11,8 @@ int _atoi(char *);
 /**
  * parse_command - finds a command in PATH
   * responsible for finding and executing a command entered by the user in the shell.
- * @data:  A pointer to the shell data structure, which contains information about the current state of the shell.
+ * @data:  A pointer to the shell data structure,
+ * which contains information about the current state of the shell.
  * Return: void
  */
 void parse_command(shell_t *data)
@@ -51,7 +52,8 @@ void parse_command(shell_t *data)
 
 /**
  * _forks - creates a child process and execute the command in that process.
- * @data:  A pointer to the shell data structure, which contains information about the current state of the shell.
+ * @data:  A pointer to the shell data structure,
+ * which contains information about the current state of the shell.
  * Return: void
  */
 void _forks(shell_t *data)
@@ -88,7 +90,8 @@ void _forks(shell_t *data)
 
 /**
  * iscommand - determines if a file is an executable command
- * @data:  A pointer to the shell data structure, which contains information about the current state of the shell.
+ * @data:  A pointer to the shell data structure,
+ * which contains information about the current state of the shell.
  * @path: path to the file
  *
  * Return: 1 if true, 0 otherwise
@@ -110,10 +113,10 @@ int iscommand(shell_t *data, char *path)
 
 /**
  * find_path - finds this cmd in the PATH string
- * @data:  A pointer to the shell data structure, which contains information about the current state of the shell.
+ * @data:  A pointer to the shell data structure,
+ * which contains information about the current state of the shell.
  * @pathstr: the PATH string
- * @cmd: the cmd to find
- *
+ * @cmd: the command to find
  * Return: full path of cmd if found or NULL
  */
 char *find_path(shell_t *data, char *pathstr, char *cmd)
