@@ -13,7 +13,7 @@ char **get_environ(shell_t *);
  * @data: A pointer to the shell data structure,
  *		which contains information about the current state of the shell.
  * @name: the name of the environment variable whose value is to be retrieved.
- * Return: returns NULL to indicate that the environment variable was not found.
+ * Return: returns NULL to indicate that the environ variable was not found.
  */
 char *_getenv(shell_t *data, const char *name)
 {
@@ -31,8 +31,8 @@ char *_getenv(shell_t *data, const char *name)
 }
 
 /**
- * _setenv - for setting or updating environment variables within
- * the shell's environment by either updating an existing node in the linked list
+ * _setenv - for setting or updating environment variables within the shell's
+ *		environment by either updating an existing node in the linked list
  * or appending a new node.
  * @data: A pointer to the shell data structure,
  *		which contains information about the current state of the shell.
@@ -75,14 +75,14 @@ int _setenv(shell_t *data, char *name, char *value)
 }
 
 /**
- * _unsetenv - provides the functionality to remove a specified environment variable
+ * _unsetenv - provides the functionality to remove a specified env variable
  *		from the shell's environment variables, allowing the user
- * to unset or remove unwanted variables during the execution of the shell program.
+ *			to remove unwanted variables during the execution of the shell program.
  * @data: A pointer to the shell data structure,
  *		which contains information about the current state of the shell.
  * @name: the name of the environment variable to be unset.
- * Return: returns data->modified,
- * which indicates whether any modifications were made to the environment variables.
+ * Return: returns data->modified, which indicates whether
+ *		any modifications were made to the environment variables.
  */
 int _unsetenv(shell_t *data, char *name)
 {
@@ -126,3 +126,4 @@ char **get_environ(shell_t *data)
 
 	return (data->environ);
 }
+
