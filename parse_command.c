@@ -199,3 +199,4 @@ int _atoi(char *s)
 	}
 	return (sign * (int)result);
 }
+
