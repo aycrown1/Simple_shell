@@ -171,4 +171,6 @@ char *_itoa(long int number, int base, int flags)
 	if (sign)
 		*--ptr = sign;
 	return (ptr);
+}
+
 
