@@ -19,7 +19,7 @@ void _eputs(char *massage)
 
 	if (!massage)
 		return;
-		/* returns without performing any further actions. */
+	/* returns without performing any further actions. */
 	while (massage[i] != '\0')
 	{
 		_puts2(massage[i]);
@@ -112,4 +112,5 @@ int _putchar(char c)
 		buffer[i++] = c;
 	return (1);
 }
+
 

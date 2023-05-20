@@ -142,7 +142,7 @@ int unsetenv_builtin(shell_t *data)
 		return (1);
 	}
 	for (count = 1; count <= data->argc; count++)
-		_unsetenv(data, data->argv[i]);
+		_unsetenv(data, data->argv[count]);
 
 	return (0);
 }
