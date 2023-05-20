@@ -5,10 +5,12 @@ void clear_data(shell_t *);
 void sigintHandler(int);
 
 /**
- * find_builtin - finding and executing built-in commands based on the user's input.
+ * find_builtin - finding and executing
+ *					built-in commands based on the user's input.
  * @data: A pointer to the shell data structure,
  *	which contains information about the current state of the shell.
- * Return: returns the value, which is either -1 if the command is not a built-in command
+ * Return: returns the value, which is either -1
+ *	if the command is not a built-in command
  *	or the return value of the executed built-in function.
  */
 int find_builtin(shell_t *data)
@@ -34,7 +36,8 @@ int find_builtin(shell_t *data)
 }
 
 /**
- * clear_data - a utility function used to clear the data fields of the shell_t structure.
+ * clear_data - a utility function used to clear
+ *		the data fields of the shell_t structure.
  * @data: A pointer to the shell data structure,
  *	which contains information about the current state of the shell.
  */

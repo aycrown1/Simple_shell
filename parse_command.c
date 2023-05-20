@@ -10,7 +10,8 @@ int _atoi(char *);
 
 /**
  * parse_command - finds a command in PATH
-  * responsible for finding and executing a command entered by the user in the shell.
+ *	responsible for finding and executing a command
+ *		entered by the user in the shell.
  * @data:  A pointer to the shell data structure,
  * which contains information about the current state of the shell.
  * Return: void
@@ -40,7 +41,10 @@ void parse_command(shell_t *data)
 	}
 	else
 	{
-		if ((interactive(data) || _getenv(data, "PATH=") || data->argv[0][0] == '/') && iscommand(data, data->argv[0]))
+		if ((interactive(data) ||
+					_getenv(data, "PATH=") ||
+					data->argv[0][0] == '/') &&
+				iscommand(data, data->argv[0]))
 			_forks(data);
 		else if (*(data->arg) != '\n')
 		{
@@ -134,8 +138,10 @@ char *find_path(shell_t *data, char *pathstr, char *cmd)
 	while (1)
 	{
 		if (!pathstr[i] || pathstr[i] == ':')
-		/* allowing the Simple Shell program
-		 to tokenize the PATH variable into individual paths.*/
+		/**
+		 * allowing the Simple Shell program
+		 * to tokenize the PATH variable into individual paths.
+		 */
 		{
 			path = duplicates(pathstr, curr_pos, i);
 			if (!*path)
@@ -158,9 +164,9 @@ char *find_path(shell_t *data, char *pathstr, char *cmd)
 
 /**
  * _atoi - converts a string to an integer.
- * it handle error conditions, such as invalid characters
- * and integer overflow, and provides a way to differentiate between successful conversions
- * and erroneous situations. 
+ *	it handle error conditions, such as invalid characters and integer overflow,
+ *		and provides a way to differentiate between successful conversions
+ *		and erroneous situations.
  * @s: the string to be converted
  * Return: 0 if no numbers in string, converted number otherwise -1 on error
  */
