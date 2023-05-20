@@ -8,6 +8,7 @@ So this repository contains an implementation of a simple UNIX shell in the C pr
 A shell is a program that serves as an interface between the user and the operating system. It allows users to interact with the operating system by accepting commands and executing them. The shell provides a command-line environment where users can type commands, and it interprets and executes those commands.
 
 
+
 ### How the Shell program works
 #### [EXECUTE COMMAND](execute.c)
 * Main Execution Loop `execute()`:
@@ -74,3 +75,8 @@ The program starts execution from the main function in the main.c file. the exec
   * The `main()` function returns `EXIT_SUCCESS` to indicate a successful execution of the program.
 
 ### THE FLOWCHART
+
+ 
+
+
+
