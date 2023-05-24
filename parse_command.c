@@ -192,11 +192,11 @@ int _atoi(char *s)
 		if (s[i] >= '0' && s[i] <= '9')
 		{
 			/* Check for integer overflow */
-			if (result > INT_MAX / 10)
+			if (result > (unsigned long int)INT_MAX / 10)
 				return (-1);
 			result *= 10;
 			/*  Check for integer overflow */
-			if (result > INT_MAX - (s[i] - '0'))
+			if (result > (unsigned long int)INT_MAX - (s[i] - '0'))
 				return (-1);
 			result += (s[i] - '0');
 		}
