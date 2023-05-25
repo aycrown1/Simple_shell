@@ -42,8 +42,8 @@ int exit_builtin(shell_t *data)
  *		It allows the user to change the current working directory.
  * @data: A pointer to the shell data structure,
  *		which contains information about the current state of the shell.
- * Return: the function returns 0 to indicate successful completion,
- *		or 1 in some specific cases.
+ * Return: The function returns 0 to indicate successful completion,
+ *         or a non-zero value in case of an error.
  */
 int cd_builtin(shell_t *data)
 {
@@ -52,43 +52,42 @@ int cd_builtin(shell_t *data)
 
 	store = getcwd(buffer, 1024);
 	if (!store)
-		_puts("Failed to get current working directory.\n");
-
+	{
+		_perror(data, "Failed to get current working directory");
+		return (1);
+	}
 	if (!data->argv[1])
 	{
 		dir = _getenv(data, "HOME=");
 		if (!dir)
 		{
-			value = 1;
-			chdir((dir = _getenv(data, "PWD=")) ? dir : "/");
+			_eputs("cd: No home directory\n");
+			return (1);
 		}
-		else
-			value = chdir(dir);
+		value = chdir(dir);
 	}
 	else if (_strcmp(data->argv[1], "-") == 0)
 	{
-		if (!_getenv(data, "OLDPWD="))
+		dir = _getenv(data, "OLDPWD=");
+		if (!dir)
 		{
-			_puts(store);
-			_putchar('\n');
+			_eputs("cd: OLDPWD not set\n");
 			return (1);
 		}
-		_puts(_getenv(data, "OLDPWD=")), _putchar('\n');
-		value = 1;
-		chdir((dir = _getenv(data, "OLDPWD=")) ? dir : "/");
+		value = chdir(dir);
+		printf("%s\n", dir);
 	}
 	else
+	{
 		value = chdir(data->argv[1]);
-	if (value == -1)
-	{
-		_perror(data, "can't cd to ");
-		_eputs(data->argv[1]), _puts2('\n');
+		if (value != 0)
+		{
+			_perror(data, "cd");
+			return (1);
+		}
 	}
-	else
-	{
-		_setenv(data, "OLDPWD", _getenv(data, "PWD="));
-		_setenv(data, "PWD", getcwd(buffer, 1024));
-	}
+	_setenv(data, "OLDPWD", _getenv(data, "PWD="));
+	_setenv(data, "PWD", getcwd(buffer, 1024));
 	return (0);
 }
 
@@ -97,32 +96,43 @@ int cd_builtin(shell_t *data)
  *		It is used to print the environment variables.
  * @data: A pointer to the shell data structure,
  *		which contains information about the current state of the shell.
- * Return: returns 0 to indicate successful completion.
+ * Return: The function returns 0 to indicate successful completion.
  */
 int env_builtin(shell_t *data)
 {
-	print_strnode(data->env);
+	list_t *env = data->env;
+
+	while (env)
+	{
+		printf("%s\n", env->string);
+		env = env->next;
+	}
+
 	return (0);
 }
-
 /**
  * setenv_builtin - implements the functionality of the setenv command.
  *		It allows the user to set or update environment variables.
  * @data: A pointer to the shell data structure,
- *which contains information about the current state of the shell.
- *  Return: returns 0 to indicate successful completion.
- *		Otherwise, it returns 1 to indicate an error.
+ *		which contains information about the current state of the shell.
+ * Return: The function returns 0 to indicate successful completion,
+ *		or a non-zero value in case of an error.
  */
 int setenv_builtin(shell_t *data)
 {
 	if (data->argc != 3)
 	{
-		_eputs("Incorrect number of arguements\n");
+		_eputs("Usage: setenv VARIABLE VALUE\n");
 		return (1);
 	}
-	if (_setenv(data, data->argv[1], data->argv[2]))
-		return (0);
-	return (1);
+
+	if (setenv(data->argv[1], data->argv[2], 1) != 0)
+	{
+		_perror(data, "setenv");
+		return (1);
+	}
+
+	return (0);
 }
 
 /**
@@ -130,19 +140,26 @@ int setenv_builtin(shell_t *data)
  *		It allows the user to remove environment variables.
  * @data: A pointer to the shell data structure,
  *		which contains information about the current state of the shell.
- * Return: the function returns 0 to indicate successful completion.
+ * Return: The function returns 0 to indicate successful completion.
  */
 int unsetenv_builtin(shell_t *data)
 {
-	int count;
+	int i;
 
-	if (data->argc == 1)
+	if (data->argc < 2)
 	{
-		_eputs("Too few arguements.\n");
+		_eputs("Usage: unsetenv VARIABLE [VARIABLE...]\n");
 		return (1);
 	}
-	for (count = 1; count <= data->argc; count++)
-		_unsetenv(data, data->argv[count]);
+
+	for (i = 1; i < data->argc; i++)
+	{
+		if (unsetenv(data->argv[i]) != 0)
+		{
+			_perror(data, "unsetenv");
+			return (1);
+		}
+	}
 
 	return (0);
 }
