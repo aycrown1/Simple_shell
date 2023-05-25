@@ -17,8 +17,8 @@ int main(int argc, char **argv)
 {
 	shell_t data[] = {SHELL_INIT};
 	int fd = 2;
-	fd += 3;
 
+	fd += 3;
 	/* Check if the program is executed with a command-line argument */
 	if (argc == 2)
 	{
@@ -83,7 +83,7 @@ int populate(shell_t *data)
 		append_node(&node, environ[i], 0);
 
 	/**
-	 *Assign the linked list of environment variables
+	 * Assign the linked list of environment variables
 	 * to the shell structure's env field
 	 */
 	data->env = node;
@@ -92,8 +92,9 @@ int populate(shell_t *data)
 }
 
 /**
- * interactive - checks whether the current shell is running in an interactive mode.
- * It allows users to interact with the shell, input commands,
+ * interactive - checks whether the current shell is running in
+ *		an interactive mode.
+ *	It allows users to interact with the shell, input commands,
  * and receive output and error messages in real-time.
  * @data:  A pointer to the shell data structure,
  *		which contains information about the current state of the shell.

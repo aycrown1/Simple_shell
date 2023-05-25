@@ -7,8 +7,10 @@ int strep(char **, char *);
 char *_itoa(long int, int, int);
 
 /**
- * execute -executing commands entered by the user. It handles the input, parsing, and execution of commands.
- * @data: A pointer to the shell data structure, which contains information about the current state of the shell.
+ * execute -executing commands entered by the user.
+ *		It handles the input, parsing, and execution of commands.
+ * @data: A pointer to the shell data structure,
+ *		which contains information about the current state of the shell.
  * @argv: array of strings representing the command line arguments from main()
  * Return: returns the results value.
  */
@@ -48,8 +50,10 @@ int execute(shell_t *data, char **argv)
 }
 
 /**
- * set_data - setting up the shell data structure based on the command-line arguments provided to the shell program.
- * @data: A pointer to the shell data structure, which contains information about the current state of the shell.
+ * set_data - setting up the shell data structure based
+ *		on the command-line arguments provided to the shell program.
+ * @data: A pointer to the shell data structure,
+ *		which contains information about the current state of the shell.
  * @argv: array of strings representing the command line arguments.
  */
 void set_data(shell_t *data, char **argv)
@@ -79,51 +83,55 @@ void set_data(shell_t *data, char **argv)
 }
 
 /**
- * replace_vars - replacing variables in command arguments with their corresponding values.
- * typically called before executing a command to ensure
- * that any variable references in the command arguments are replaced with their corresponding values.
- * This allows the shell to substitute variables dynamically during command execution.
- * @data: A pointer to the shell data structure, which contains information about the current state of the shell.
+ * replace_vars - replacing variables in command arguments with their
+ *			corresponding values. typically called before executing
+ *			a command to ensure that any variable references in the
+ *			command arguments are replaced with their corresponding values.
+ *		This allows the shell to substitute variables
+ *		dynamically during command execution.
+ * @data: A pointer to the shell data structure,
+ *		which contains information about the current state of the shell.
  * Return: returns 0 to indicate successful completion.
  */
 int replace_vars(shell_t *data)
 {
-    int i = 0;
-    list_t *node;
+	int i = 0;
+	list_t *node;
 
-    for (i = 0; data->argv[i]; i++)
-    {
-        if (data->argv[i][0] != '$' || !data->argv[i][1])
-            continue;
-        if (!_strcmp(data->argv[i], "$?"))
-        {
-            strep(&(data->argv[i]), _strdup(_itoa(data->status, 10, 0)));
-            continue;
-        }
-        if (!_strcmp(data->argv[i], "$$"))
-        {
-            strep(&(data->argv[i]), _strdup(_itoa(getpid(), 10, 0)));
-            continue;
-        }
-        node = node_prefix(data->env, &data->argv[i][1], '=');
-        if (node)
-        {
-            strep(&(data->argv[i]), _strdup(_strchr(node->string, '=') + 1));
-            continue;
-        }
-        /* If none of the above cases apply, the argument is replaced with an empty string.*/
-        strep(&data->argv[i], _strdup(""));
-    }
+	for (i = 0; data->argv[i]; i++)
+	{
+		if (data->argv[i][0] != '$' || !data->argv[i][1])
+			continue;
+		if (!_strcmp(data->argv[i], "$?"))
+		{
+			strep(&(data->argv[i]), _strdup(_itoa(data->status, 10, 0)));
+			continue;
+		}
+		if (!_strcmp(data->argv[i], "$$"))
+		{
+			strep(&(data->argv[i]), _strdup(_itoa(getpid(), 10, 0)));
+			continue;
+		}
+		node = node_prefix(data->env, &data->argv[i][1], '=');
+		if (node)
+		{
+			strep(&(data->argv[i]), _strdup(_strchr(node->string, '=') + 1));
+			continue;
+		}
+		/* If none of the above cases apply, the arg is replaced with an empty str*/
+		strep(&data->argv[i], _strdup(""));
+	}
 
-    return (0);
+	return (0);
 }
 
 
 /**
  * strep - utility function that helps in replacing the value of a pointer.
- * used in cases where you have a pointer to a string that needs to be updated dynamically with a new value.
- * It simplifies the process of replacing the old string with the new one
- * while correctly handling memory allocation and deallocation.
+ *		used in cases where you have a pointer to a string that needs
+ *		to be updated dynamically with a new value.
+ *	It simplifies the process of replacing the old string with the new one
+ *		while correctly handling memory allocation and deallocation.
  * @old: original string that needs to be replaced.
  * @new: the new string that will replace the old one.
  * Return: returns 1 to indicate that the replacement was successful.
@@ -137,10 +145,11 @@ int strep(char **old, char *new)
 
 /**
  * _itoa - converts an integer to a string representation in a given base.
- * It resembles the standard library function itoa() (integer to ASCII).
+ *	It resembles the standard library function itoa() (integer to ASCII).
  * @number: number that needs to be converted to a string.
  * @base: base in which the number should be represented as a string.
- * Typically, it can be 2, 8, 10, or 16, corresponding to binary, octal, decimal, or hexadecimal representations.
+ *	Typically, it can be 2, 8, 10, or 16,
+ *		corresponding to binary, octal, decimal, or hexadecimal representations
  * @flags: A set of flags that control the behavior of the function.
  * The flags are represented as bitwise options.
  * Return: returns a pointer to the resulting string.
@@ -162,8 +171,7 @@ char *_itoa(long int number, int base, int flags)
 	ptr = &buffer[49];
 	*ptr = '\0';
 
-	do
-	{
+	do {
 		*--ptr = array[num % base];
 		num /= base;
 	} while (num != 0);
@@ -172,5 +180,4 @@ char *_itoa(long int number, int base, int flags)
 		*--ptr = sign;
 	return (ptr);
 }
-
 
