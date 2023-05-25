@@ -52,42 +52,45 @@ int cd_builtin(shell_t *data)
 
 	store = getcwd(buffer, 1024);
 	if (!store)
-	{
-		_perror(data, "Failed to get current working directory");
-		return (1);
-	}
+		_puts("Failed to get current working directory.\n");
+
 	if (!data->argv[1])
 	{
 		dir = _getenv(data, "HOME=");
 		if (!dir)
 		{
-			_eputs("cd: No home directory\n");
-			return (1);
+			value = 1;
+			chdir((dir = _getenv(data, "PWD=")) ? dir : "/");
 		}
-		value = chdir(dir);
+		else
+			value = chdir(dir);
 	}
 	else if (_strcmp(data->argv[1], "-") == 0)
 	{
 		dir = _getenv(data, "OLDPWD=");
 		if (!dir)
 		{
-			_eputs("cd: OLDPWD not set\n");
+			_puts(store);
+			_putchar('\n');
 			return (1);
 		}
+		_puts(dir);
+		_putchar('\n');
 		value = chdir(dir);
-		printf("%s\n", dir);
+	}
+	else
+		value = chdir(data->argv[1]);
+	if (value == -1)
+	{
+		_perror(data, "can't cd to ");
+		_eputs(data->argv[1]);
+		_puts2('\n');
 	}
 	else
 	{
-		value = chdir(data->argv[1]);
-		if (value != 0)
-		{
-			_perror(data, "cd");
-			return (1);
-		}
+		_setenv(data, "OLDPWD", _getenv(data, "PWD="));
+		_setenv(data, "PWD", getcwd(buffer, 1024));
 	}
-	_setenv(data, "OLDPWD", _getenv(data, "PWD="));
-	_setenv(data, "PWD", getcwd(buffer, 1024));
 	return (0);
 }
 
@@ -163,4 +166,3 @@ int unsetenv_builtin(shell_t *data)
 
 	return (0);
 }
-
