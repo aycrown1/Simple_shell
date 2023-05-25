@@ -130,16 +130,16 @@ char *find_path(shell_t *data, char *pathstr, char *cmd)
 	list_t *alias;
 
 	if (!pathstr)
-		return NULL;
+		return (NULL);
 
 	alias = node_prefix(data->alias, cmd, '=');
 	if (alias)
-		return _strdup(alias->string + _strlen(cmd) + 1);
+		return (_strdup(alias->string + _strlen(cmd) + 1));
 
 	if ((_strlen(cmd) > 2) && _strstr(cmd, "./"))
 	{
 		if (iscommand(data, cmd))
-			return cmd;
+			return (cmd);
 	}
 
 	while (1)
@@ -155,14 +155,14 @@ char *find_path(shell_t *data, char *pathstr, char *cmd)
 				_strcat(path, cmd);
 			}
 			if (iscommand(data, path))
-				return path;
+				return (path);
 			if (!pathstr[i])
 				break;
 			curr_pos = i;
 		}
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }
 
 
