@@ -127,21 +127,31 @@ char *find_path(shell_t *data, char *pathstr, char *cmd)
 {
 	int i = 0, curr_pos = 0;
 	char *path;
+	list_t *alias;
 
 	if (!pathstr)
-		return (NULL);
+		return NULL;
+
+	alias = node_prefix(data->alias, cmd, '=');
+	if (alias)
+		return _strdup(alias->string + _strlen(cmd) + 1);
+
 	if ((_strlen(cmd) > 2) && _strstr(cmd, "./"))
 	{
 		if (iscommand(data, cmd))
-			return (cmd);
+			return cmd;
 	}
+
 	while (1)
 	{
 		if (!pathstr[i] || pathstr[i] == ':')
+<<<<<<< HEAD
 		/**
 		 * allowing the Simple Shell program
 		 * to tokenize the PATH variable into individual paths.
 		 */
+=======
+>>>>>>> 6fd7eef (making corrections)
 		{
 			path = duplicates(pathstr, curr_pos, i);
 			if (!*path)
@@ -152,15 +162,16 @@ char *find_path(shell_t *data, char *pathstr, char *cmd)
 				_strcat(path, cmd);
 			}
 			if (iscommand(data, path))
-				return (path);
+				return path;
 			if (!pathstr[i])
 				break;
 			curr_pos = i;
 		}
 		i++;
 	}
-	return (NULL);
+	return NULL;
 }
+
 
 /**
  * _atoi - converts a string to an integer.
